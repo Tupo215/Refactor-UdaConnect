@@ -1,4 +1,4 @@
-name: udaconnect-api - Package with Docker
+name: Udaconnect-api - Package with Docker
 
 on:
   push:
