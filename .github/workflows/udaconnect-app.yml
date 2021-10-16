@@ -22,7 +22,7 @@ jobs:
         uses: docker/build-push-action@v2.7.0
         with:
           tags: tupo215/udaconnect-app
-          file: ./modules/api/Dockerfile
+          file: ./modules/frontend/Dockerfile
       -
         name: Build and push Docker images
         uses: docker/build-push-action@v2.7.0
