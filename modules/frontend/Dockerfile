@@ -9,7 +9,7 @@ RUN npm install
 RUN npm install react-scripts@3.4.3 -g
 
 CMD ["pwd"]
-COPY . ./
+COPY ./modules/frontend .
 
 EXPOSE 3000
 
