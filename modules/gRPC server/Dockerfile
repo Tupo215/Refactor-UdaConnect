@@ -2,10 +2,10 @@ FROM python:2.7
 
 WORKDIR .
 
-COPY /modules/gRPCpersonID/requirements.txt requirements.txt
+COPY ./modules/gRPC server/requirements.txt requirements.txt
 RUN pip install -r requirements.txt
 
 EXPOSE 5005
 
-COPY ./modules/gRPCpersonID/app .
+COPY ./modules/gRPC server/app .
 CMD ["python", "app.py", "--host", "0.0.0.0"]
