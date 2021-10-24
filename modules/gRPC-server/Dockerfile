@@ -1,8 +1,8 @@
-FROM python:2.7
+FROM python:3.7
 
 WORKDIR .
 
-COPY /modules/gRPC-server/requirements.txt requirements.txt
+COPY ./modules/gRPC-server/requirements.txt requirements.txt
 RUN pip install -r requirements.txt
 
 EXPOSE 5005
