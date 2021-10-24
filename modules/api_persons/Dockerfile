@@ -8,5 +8,5 @@ RUN pip install -r requirements.txt
 
 EXPOSE 5004
 
-COPY ./modules/api_persons/api .
+COPY ./modules/api_persons .
 CMD ["flask", "run", "--host", "0.0.0.0"]
