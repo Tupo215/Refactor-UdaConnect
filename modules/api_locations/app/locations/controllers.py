@@ -15,7 +15,7 @@ api = Namespace("locations", description="Connections via geolocation.")  # noqa
 
 logging.basicConfig(level=logging.DEBUG )
 
-@app.before_request
+@api.before_request
 def before_request():
     # Set up a Kafka producer
     TOPIC_NAME = 'locations'

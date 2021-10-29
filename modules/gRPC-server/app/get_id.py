@@ -2,7 +2,7 @@ import grpc
 import person_id_pb2
 import person_id_pb2_grpc
 
-channel = grpc.insecure_channel("localhost:5005")
+channel = grpc.insecure_channel("localhost:30003")
 stub = person_id_pb2_grpc.PesronIDServiceStub(channel)
 
 # Enter person Id
