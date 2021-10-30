@@ -1,0 +1,9 @@
+gRPC-server
+
+The gRPC has one message defined which is the PERSONIDMESSAGE. This has four componets 
+defined which are id(integer), first_name(string), last_name(string), and company_name(string).
+It has one service which takes PERSONIDMESSAGE and returns PERSONIDMESSAGE. 
+The gRPC has been set up in a way that you run the get_id.py file which will prompt you to 
+enter the id number of person you want this will search if such a person id exist and give you 
+a response which can be either "Error: No person id exists" or a json response with id, first_name, last_name
+and company_name of the inqured id.

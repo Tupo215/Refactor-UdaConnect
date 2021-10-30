@@ -1,0 +1,108 @@
+---
+swagger: "2.0"
+info:
+  description: This is a Location API
+  version: 1.0.0
+  title: Location and Person API
+  license:
+    name: Apache 2.0
+    url: http://www.apache.org/licenses/LICENSE-2.0.html
+host: virtserver.swaggerhub.com
+basePath: /tryingitout/Locations/1.0.0
+tags:
+- name: locations
+- name: persons
+schemes:
+- https
+paths:
+  /locations:
+    get:
+      tags:
+      - locations
+      operationId: locations
+      produces:
+      - application/json
+      parameters:
+      - name: location id
+        in: query
+        description: Unique ID for a given Location
+        required: false
+        type: integer
+      responses:
+        "200":
+          description: Success
+          schema:
+            type: array
+            items:
+              $ref: '#/definitions/Locations'
+    post:
+      tags:
+      - locations
+      operationId: addlocation
+      consumes:
+      - application/json
+      produces:
+      - application/json
+      parameters:
+      - in: body
+        name: location_id
+        description: Unique ID for a given Location
+        required: false
+        schema:
+          $ref: '#/definitions/Locations'
+      responses:
+        "200":
+          description: Success
+  /persons:
+    get:
+      tags:
+      - persons
+      produces:
+      - application/json
+      parameters:
+      - name: person id
+        in: query
+        description: Unique ID for a given Person
+        required: false
+        type: integer
+      responses:
+        "200":
+          description: Sucess
+          schema:
+            type: array
+            items:
+              $ref: '#/definitions/Persons'
+definitions:
+  Locations:
+    type: object
+    required:
+    - coordinate
+    - creation_time
+    - id
+    - person_id
+    properties:
+      id:
+        type: integer
+      person_id:
+        type: integer
+      creation_time:
+        type: string
+        format: date-time
+      coordinate:
+        type: string
+  Persons:
+    type: object
+    required:
+    - company_name
+    - first_name
+    - id
+    - last_name
+    properties:
+      id:
+        type: integer
+      first_name:
+        type: string
+      last_name:
+        type: string
+      company_name:
+        type: string

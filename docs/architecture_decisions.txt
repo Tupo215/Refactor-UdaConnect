@@ -1,0 +1,15 @@
+Architecture Decisions
+
+API:
+1. connection api
+2. locations api
+3. persons/{persons_id} api
+4. persons api
+5. locations/{locations_id} api
+
+The frontend application uses the connection, locations/{locations_id} and persons api. The monolith application has been split into three 
+microservices with locations and persons/{persons_id} being refactored. The locations api has been intergarated with Kafka that will help it be 
+asynachisis as locations are being processed the database and servers are not overworked trying to both create new locations for new users and 
+retrieve locations for old users as well as new users trying to connect. The persons/{persons_id} has been refactored to include a gRPC server that will
+make sure that all the information of a person being retrived from the database is correct has stored in the database which gives an extra layer of checking
+to verify the person information.
