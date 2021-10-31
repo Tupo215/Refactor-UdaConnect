@@ -1,6 +1,8 @@
 import logging
 from datetime import datetime, timedelta
 from typing import Dict, List
+import json
+from .controllers import g
 
 from app import db
 from app.locations.models import Location
@@ -10,6 +12,7 @@ from sqlalchemy.sql import text
 
 logging.basicConfig(level=logging.WARNING)
 logger = logging.getLogger("locations-api")
+
 
 class LocationService:
     @staticmethod
@@ -22,6 +25,10 @@ class LocationService:
 
         # Rely on database to return text form of point to reduce overhead of conversion in app code
         location.wkt_shape = coord_text
+        # Sending to kafka producer the location retrieved
+        kafka_data = json.dumps(location).encode()
+        kafka_producer = g.kafka_producer
+        kafka_producer.send("locations", kafka_data)
         return location
 
     @staticmethod
@@ -38,4 +45,8 @@ class LocationService:
         db.session.add(new_location)
         db.session.commit()
 
+        # Sending to kafka producer the new location created
+        kafka_data = json.dumps(new_location).encode()
+        kafka_producer = g.kafka_producer
+        kafka_producer.send("locations", kafka_data)
         return new_location
