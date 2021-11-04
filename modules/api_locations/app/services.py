@@ -9,7 +9,7 @@ from schemas import LocationSchema
 from geoalchemy2.functions import ST_AsText, ST_Point
 from sqlalchemy.sql import text
 import psycopg2
-import app
+import controllers
 
 logging.basicConfig(level=logging.WARNING)
 logger = logging.getLogger("locations-api")
@@ -24,9 +24,9 @@ class LocationService:
         location = cur.fetchone()
 
         kafka_data = json.dumps(location).encode()
-        kafka_producer = app.g.kafka_producer
+        kafka_producer = controllers.g.kafka_producer
         kafka_producer.send("locations", kafka_data)
-        kafka_consumer = app.g.kafka_consumer
+        kafka_consumer = controllers.g.kafka_consumer
         with open('consumer.txt', 'w') as f:
             for message in kafka_consumer:
                 f.write(message)
