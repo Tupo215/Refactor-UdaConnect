@@ -8,5 +8,5 @@ RUN pip install -r requirements.txt
 
 EXPOSE 5001
 
-COPY ./modules/api_locations .
+COPY ./modules/locations-api .
 CMD ["flask", "run", "--host", "0.0.0.0"]

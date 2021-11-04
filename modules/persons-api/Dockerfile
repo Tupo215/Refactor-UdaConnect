@@ -3,10 +3,10 @@ FROM python:3.7-alpine
 WORKDIR .
 
 RUN apk add --no-cache gcc musl-dev linux-headers geos libc-dev postgresql-dev
-COPY ./modules/api/requirements.txt requirements.txt
+COPY ./modules/api_persons/requirements.txt requirements.txt
 RUN pip install -r requirements.txt
 
-EXPOSE 5000
+EXPOSE 5004
 
-COPY ./modules/api .
+COPY ./modules/persons-api .
 CMD ["flask", "run", "--host", "0.0.0.0"]
