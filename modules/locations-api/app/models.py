@@ -23,7 +23,7 @@ class Location():
 
     id = Column(BigInteger, primary_key=True)
     person_id = Column(Integer, ForeignKey(Person.id), nullable=False)
-    coordinate = Column(Geometry("POINT"), nullable=False)
+    coordinate = Column(String, nullable=False)
     creation_time = Column(DateTime, nullable=False, default=datetime.utcnow)
     _wkt_shape: str = None
 

@@ -2,10 +2,10 @@
 """Client and server classes corresponding to protobuf-defined services."""
 import grpc
 
-import person_id_pb2 as person__id__pb2
+import create_locations_pb2 as create__locations__pb2
 
 
-class PesronIDServiceStub(object):
+class LocationServiceStub(object):
     """Missing associated documentation comment in .proto file."""
 
     def __init__(self, channel):
@@ -14,42 +14,42 @@ class PesronIDServiceStub(object):
         Args:
             channel: A grpc.Channel.
         """
-        self.GetID = channel.unary_unary(
-                '/PesronIDService/GetID',
-                request_serializer=person__id__pb2.PersonIDMessage.SerializeToString,
-                response_deserializer=person__id__pb2.PersonIDMessage.FromString,
+        self.Create = channel.unary_unary(
+                '/LocationService/Create',
+                request_serializer=create__locations__pb2.LocationMessage.SerializeToString,
+                response_deserializer=create__locations__pb2.LocationMessage.FromString,
                 )
 
 
-class PesronIDServiceServicer(object):
+class LocationServiceServicer(object):
     """Missing associated documentation comment in .proto file."""
 
-    def GetID(self, request, context):
+    def Create(self, request, context):
         """Missing associated documentation comment in .proto file."""
         context.set_code(grpc.StatusCode.UNIMPLEMENTED)
         context.set_details('Method not implemented!')
         raise NotImplementedError('Method not implemented!')
 
 
-def add_PesronIDServiceServicer_to_server(servicer, server):
+def add_LocationServiceServicer_to_server(servicer, server):
     rpc_method_handlers = {
-            'GetID': grpc.unary_unary_rpc_method_handler(
-                    servicer.GetID,
-                    request_deserializer=person__id__pb2.PersonIDMessage.FromString,
-                    response_serializer=person__id__pb2.PersonIDMessage.SerializeToString,
+            'Create': grpc.unary_unary_rpc_method_handler(
+                    servicer.Create,
+                    request_deserializer=create__locations__pb2.LocationMessage.FromString,
+                    response_serializer=create__locations__pb2.LocationMessage.SerializeToString,
             ),
     }
     generic_handler = grpc.method_handlers_generic_handler(
-            'PesronIDService', rpc_method_handlers)
+            'LocationService', rpc_method_handlers)
     server.add_generic_rpc_handlers((generic_handler,))
 
 
  # This class is part of an EXPERIMENTAL API.
-class PesronIDService(object):
+class LocationService(object):
     """Missing associated documentation comment in .proto file."""
 
     @staticmethod
-    def GetID(request,
+    def Create(request,
             target,
             options=(),
             channel_credentials=None,
@@ -59,8 +59,8 @@ class PesronIDService(object):
             wait_for_ready=None,
             timeout=None,
             metadata=None):
-        return grpc.experimental.unary_unary(request, target, '/PesronIDService/GetID',
-            person__id__pb2.PersonIDMessage.SerializeToString,
-            person__id__pb2.PersonIDMessage.FromString,
+        return grpc.experimental.unary_unary(request, target, '/LocationService/Create',
+            create__locations__pb2.LocationMessage.SerializeToString,
+            create__locations__pb2.LocationMessage.FromString,
             options, channel_credentials,
             insecure, call_credentials, compression, wait_for_ready, timeout, metadata)

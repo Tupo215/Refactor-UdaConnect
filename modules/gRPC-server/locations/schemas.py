@@ -1,13 +1,14 @@
-from app.persons.models import Person
+from models import Location
 from geoalchemy2.types import Geometry as GeometryType
 from marshmallow import Schema, fields
 from marshmallow_sqlalchemy.convert import ModelConverter as BaseModelConverter
 
-class PersonSchema(Schema):
+
+class LocationSchema(Schema):
     id = fields.Integer()
-    first_name = fields.String()
-    last_name = fields.String()
-    company_name = fields.String()
+    person_id = fields.Integer()
+    coordinate = fields.String()
+    creation_time = fields.DateTime()
 
     class Meta:
-        model = Person
+        model = Location

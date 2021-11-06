@@ -43,4 +43,4 @@ def locations(location_id):
 
 
 if __name__ == "__main__": 
-   api.run(host='0.0.0.0', port='5001')
+   api.run(host='0.0.0.0', port='30002')
