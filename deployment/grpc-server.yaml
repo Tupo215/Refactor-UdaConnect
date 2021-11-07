@@ -1,0 +1,44 @@
+apiVersion: v1
+kind: Service
+metadata:
+  labels:
+    service: grpc-server
+  name: grpc-server
+spec:
+  ports:
+  - name: "5005"
+    port: 5005
+    targetPort: 5005
+    nodePort: 30003
+  selector:
+    service: grpc-server
+  type: NodePort
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  labels:
+    service: grpc-server
+  name: grpc-server
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      service: grpc-server
+  template:
+    metadata:
+      labels:
+        service: grpc-server
+    spec:
+      containers:
+      - image: tupo215/grpc-server:latest
+        name: grpc-server
+        imagePullPolicy: Always
+        resources:
+          requests:
+            memory: "128Mi"
+            cpu: "64m"
+          limits:
+            memory: "256Mi"
+            cpu: "256m"
+      restartPolicy: Always

@@ -1,0 +1,55 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: kafka-service
+  labels:
+    name: kafka
+spec:
+  ports:
+    - port: 9092
+      name: kafka-port
+      protocol: TCP
+  selector:
+    app: kafka
+    id: "0"
+    type: LoadBalancer
+---
+kind: Deployment
+apiVersion: apps/v1
+metadata:
+  name: kafka-broker0
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: kafka
+      id: "0"
+  template:
+    metadata:
+      labels:
+        app: kafka
+        id: "0"
+    spec:
+      containers:
+      - name: kafka
+        image: wurstmeister/kafka
+        resources:
+          requests:
+            memory: "128Mi"
+            cpu: "64m"
+          limits:
+            memory: "256Mi"
+            cpu: "256m"
+        ports:
+        - containerPort: 9092
+        env:
+        - name: KAFKA_ADVERTISED_PORT
+          value: "9092"
+        - name: KAFKA_ADVERTISED_HOST_NAME
+          value: 192.168.1.240
+        - name: KAFKA_ZOOKEEPER_CONNECT
+          value: zoo1:2181
+        - name: KAFKA_BROKER_ID
+          value: "0"
+        - name: KAFKA_CREATE_TOPICS
+          value: locations:1:1
