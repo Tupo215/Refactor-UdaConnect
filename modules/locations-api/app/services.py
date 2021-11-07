@@ -14,7 +14,7 @@ import controllers
 logging.basicConfig(level=logging.WARNING)
 logger = logging.getLogger("locations-api")
 
-conn = psycopg2.connect("dbname=geoconnections user=ct_admin password=ct_admin")
+conn = psycopg2.connect("dbname=geoconnections user=ct_admin")
 cur = conn.cursor()
 
 class LocationService:
