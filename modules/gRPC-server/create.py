@@ -2,9 +2,9 @@ import grpc
 import create_locations_pb2
 import create_locations_pb2_grpc
 
-# Connect to gRPC server running on 5005
+# Connect to gRPC server running on 30003
 
-channel = grpc.insecure_channel("localhost:5005")
+channel = grpc.insecure_channel("localhost:30003")
 stub = create_locations_pb2_grpc.LocationServiceStub(channel)
 
 # Use this to test the gRPC server to create a new user

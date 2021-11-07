@@ -3,7 +3,7 @@ swagger: "2.0"
 info:
   description: This is a Location API
   version: 1.0.0
-  title: Location and Person API
+  title: Location API
   license:
     name: Apache 2.0
     url: http://www.apache.org/licenses/LICENSE-2.0.html
@@ -11,7 +11,6 @@ host: virtserver.swaggerhub.com
 basePath: /tryingitout/Locations/1.0.0
 tags:
 - name: locations
-- name: persons
 schemes:
 - https
 paths:
@@ -53,25 +52,6 @@ paths:
       responses:
         "200":
           description: Success
-  /persons:
-    get:
-      tags:
-      - persons
-      produces:
-      - application/json
-      parameters:
-      - name: person id
-        in: query
-        description: Unique ID for a given Person
-        required: false
-        type: integer
-      responses:
-        "200":
-          description: Sucess
-          schema:
-            type: array
-            items:
-              $ref: '#/definitions/Persons'
 definitions:
   Locations:
     type: object
@@ -89,20 +69,4 @@ definitions:
         type: string
         format: date-time
       coordinate:
-        type: string
-  Persons:
-    type: object
-    required:
-    - company_name
-    - first_name
-    - id
-    - last_name
-    properties:
-      id:
-        type: integer
-      first_name:
-        type: string
-      last_name:
-        type: string
-      company_name:
         type: string
