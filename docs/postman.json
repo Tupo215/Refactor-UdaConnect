@@ -1,0 +1,147 @@
+{
+	"info": {
+		"_postman_id": "ff41067a-49fd-444e-9b05-cc0f46b2e8ee",
+		"name": "local test",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "http://192.168.1.154:30002/locations/60",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://192.168.1.154:30002/locations/60",
+					"protocol": "http",
+					"host": [
+						"192",
+						"168",
+						"1",
+						"154"
+					],
+					"port": "30002",
+					"path": [
+						"locations",
+						"60"
+					]
+				}
+			},
+			"response": [
+				{
+					"name": "http://192.168.1.154:30002/locations/60",
+					"originalRequest": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://192.168.1.154:30002/locations/60",
+							"protocol": "http",
+							"host": [
+								"192",
+								"168",
+								"1",
+								"154"
+							],
+							"port": "30002",
+							"path": [
+								"locations",
+								"60"
+							]
+						}
+					},
+					"status": "OK",
+					"code": 200,
+					"_postman_previewlanguage": "json",
+					"header": [
+						{
+							"key": "Content-Type",
+							"value": "application/json"
+						},
+						{
+							"key": "Content-Length",
+							"value": "120"
+						},
+						{
+							"key": "Server",
+							"value": "Werkzeug/2.0.2 Python/3.8.3"
+						},
+						{
+							"key": "Date",
+							"value": "Fri, 05 Nov 2021 22:56:02 GMT"
+						}
+					],
+					"cookie": [],
+					"body": "{\n    \"coordinate\": \"0101000000842FA75F7D874140CEEEDAEF9AA45AC0\",\n    \"creation_time\": \"2020-07-06 10:37:06\",\n    \"id\": 60,\n    \"person_id\": 8\n}"
+				}
+			]
+		},
+		{
+			"name": "http://192.168.1.154:30002/locations/40",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://192.168.1.154:30002/locations/40",
+					"protocol": "http",
+					"host": [
+						"192",
+						"168",
+						"1",
+						"154"
+					],
+					"port": "30002",
+					"path": [
+						"locations",
+						"40"
+					]
+				}
+			},
+			"response": [
+				{
+					"name": "http://192.168.1.154:30002/locations/40",
+					"originalRequest": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://192.168.1.154:30002/locations/40",
+							"protocol": "http",
+							"host": [
+								"192",
+								"168",
+								"1",
+								"154"
+							],
+							"port": "30002",
+							"path": [
+								"locations",
+								"40"
+							]
+						}
+					},
+					"status": "OK",
+					"code": 200,
+					"_postman_previewlanguage": "json",
+					"header": [
+						{
+							"key": "Content-Type",
+							"value": "application/json"
+						},
+						{
+							"key": "Content-Length",
+							"value": "120"
+						},
+						{
+							"key": "Server",
+							"value": "Werkzeug/2.0.2 Python/3.8.3"
+						},
+						{
+							"key": "Date",
+							"value": "Fri, 05 Nov 2021 22:57:01 GMT"
+						}
+					],
+					"cookie": [],
+					"body": "{\n    \"coordinate\": \"010100000097FDBAD39D925EC0D00A0C59DDC64240\",\n    \"creation_time\": \"2020-07-07 10:37:06\",\n    \"id\": 40,\n    \"person_id\": 1\n}"
+				}
+			]
+		}
+	]
+}
