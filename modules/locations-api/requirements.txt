@@ -26,5 +26,4 @@ Werkzeug==0.16.1
 flask-restx==0.5.1
 kafka-python
 psycopg2
-grpcio
 grpcio-tools
