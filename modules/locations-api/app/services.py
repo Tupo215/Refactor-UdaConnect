@@ -10,10 +10,18 @@ from geoalchemy2.functions import ST_AsText, ST_Point
 from sqlalchemy.sql import text
 import psycopg2
 import controllers
+import grpc
+import create_locations_pb2
+import create_locations_pb2_grpc
 
 logging.basicConfig(level=logging.WARNING)
 logger = logging.getLogger("locations-api")
 
+# connect to gRPC server
+channel = grpc.insecure_channel("localhost:30003")
+stub = create_locations_pb2_grpc.LocationServiceStub(channel)
+
+# connect to database
 conn = psycopg2.connect("dbname=geoconnections user=ct_admin")
 cur = conn.cursor()
 
@@ -30,7 +38,7 @@ class LocationService:
                 "coordinate" : r[3]
                 }
                 
-
+        # sends data to kafka data
         kafka_data = json.dumps(location).encode()
         kafka_producer = controllers.g.kafka_producer
         kafka_producer.send("locations", kafka_data)
@@ -47,21 +55,16 @@ class LocationService:
             logger.warning(f"Unexpected data format in payload: {validation_results}")
             raise Exception(f"Invalid payload: {validation_results}")
 
-        
         new_location = Location()
         new_location.person_id = location["person_id"]
         new_location.creation_time = location["creation_time"]
         new_location.coordinate = ST_Point(location["latitude"], location["longitude"])
         
-        cur.execute("INSERT INTO location (person_id, creation_time, coordinate) VALUES (%s, %s, %s)",
-        (new_location.person_id, new_location.creation_time, new_location.coordinate,))
-        conn.commit()
-
-        kafka_data = json.dumps(new_location).encode()
-        kafka_producer = controllers.g.kafka_producer
-        kafka_producer.send("locations", kafka_data)
-        kafka_consumer = controllers.g.kafka_consumer
+        # connects to the gRPC server and uses location service defined in __init__.py
+        new__location = stub.Create(create_locations_pb2.LocationMessage(
+        id = new_location.id,
+        person_id = new_location.person_id,
+        creation_time = new_location.creation_time,
+        coordinate = new_location.coordinate))
         
-        cur.close()
-        conn.close()
-        return new_location
+        return new__location
