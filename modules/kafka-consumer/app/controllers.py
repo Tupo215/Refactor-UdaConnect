@@ -29,7 +29,7 @@ def before_request():
     TOPIC_NAME = 'locations'
     KAFKA_SERVER = 'kafka.default.svc.cluster.local:9092'
     producer = KafkaProducer(bootstrap_servers=KAFKA_SERVER)
-    consumer = KafkaConsumer(TOPIC_NAME)
+    consumer = KafkaConsumer(TOPIC_NAME, bootstrap_servers=KAFKA_SERVER)
     # Setting Kafka to g enables us to use this
     # in other parts of our application
     g.kafka_producer = producer

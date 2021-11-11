@@ -37,11 +37,6 @@ class LocationService:
                 "creation_time" : str(r[2]),
                 "coordinate" : r[3]
                 }
-                
-        # sends data to kafka data
-        kafka_data = json.dumps(location).encode('utf-8')
-        kafka_producer = controllers.g.kafka_producer
-        kafka_producer.send("locations", kafka_data)
         
         cur.close()
         conn.close()
@@ -66,4 +61,4 @@ class LocationService:
         creation_time = new_location.creation_time,
         coordinate = new_location.coordinate))
         
-        return new__location
+        return new__location       
