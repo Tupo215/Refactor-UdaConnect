@@ -2,6 +2,7 @@ from datetime import datetime
 import logging
 
 import flask
+from flask_sqlalchemy import SQLAlchemy
 from kafka import KafkaProducer, KafkaConsumer
 from models import Location
 from schemas import LocationSchema
@@ -18,8 +19,14 @@ DATE_FORMAT = "%Y-%m-%d"
 
 api = Flask(__name__)
 
+#connect to database
+api.config['SQLALCHEMY_DATABASE_URL'] = 'postgresql://localhost:5432/geoconnections'
+
+db = SQLAlchemy(api)
+
 logging.basicConfig(level=logging.DEBUG )
 
+#connect to grpc-server
 channel = grpc.insecure_channel("localhost:30003")
 stub = create_locations_pb2_grpc.LocationServiceStub(channel)
 

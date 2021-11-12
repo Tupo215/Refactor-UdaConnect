@@ -7,6 +7,7 @@ import logging
 from datetime import datetime, timedelta
 from typing import Dict, List
 import json
+import locations.controllers
 from locations.models import Location
 from geoalchemy2.functions import ST_AsText, ST_Point
 from sqlalchemy.sql import text
@@ -14,9 +15,6 @@ import psycopg2
 
 logging.basicConfig(level=logging.WARNING)
 logger = logging.getLogger("locations-api")
-
-conn = psycopg2.connect("dbname=geoconnections user=ct_admin")
-cur = conn.cursor()
 
 class LocationServicer(create_locations_pb2_grpc.LocationServiceServicer):
     def Create(self, request, context):
@@ -32,12 +30,8 @@ class LocationServicer(create_locations_pb2_grpc.LocationServiceServicer):
         new_location.creation_time = location.creation_time
         new_location.coordinate = location.coordinate
         
-        cur.execute("INSERT INTO location (id,person_id, creation_time, coordinate) VALUES (%s, %s, %s, %s)",
-        (new_location.id, new_location.person_id, new_location.creation_time, new_location.coordinate,))
-        conn.commit()
-        
-        cur.close()
-        conn.close()
+        locations.controllers.db.session.add(new_location)
+        locations.controllers.db.session.commit()
         
         return location
         

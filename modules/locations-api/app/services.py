@@ -2,8 +2,6 @@ import logging
 from datetime import datetime, timedelta
 from typing import Dict, List
 import json
-
-
 from models import Location
 from schemas import LocationSchema
 from geoalchemy2.functions import ST_AsText, ST_Point
@@ -21,30 +19,16 @@ logger = logging.getLogger("locations-api")
 channel = grpc.insecure_channel("localhost:30003")
 stub = create_locations_pb2_grpc.LocationServiceStub(channel)
 
-# connect to database
-conn = psycopg2.connect("dbname=geoconnections user=ct_admin")
-cur = conn.cursor()
-
 class LocationService:
     @staticmethod
     def retrieve(location_id):
-        cur.execute("SELECT id, person_id, creation_time, coordinate FROM location WHERE id = %s", (location_id,))
-        rows = cur.fetchall()
-        for r in rows:
-           location = {
-                "id" : r[0],
-                "person_id" : r[1],
-                "creation_time" : str(r[2]),
-                "coordinate" : r[3]
-                }
-                
+        #query database to get location based on location_id 
+        location = controllers.db.session.query(Location, Location.coordinate.ST_AsText()).filter(Location.id == location_id).one()    
         # sends data to kafka data
         kafka_data = json.dumps(location).encode('utf-8')
         kafka_producer = controllers.g.kafka_producer
         kafka_producer.send("locations", kafka_data)
         
-        cur.close()
-        conn.close()
         return location
 
     @staticmethod
@@ -65,5 +49,8 @@ class LocationService:
         person_id = new_location.person_id,
         creation_time = new_location.creation_time,
         coordinate = new_location.coordinate))
+        #commit new location
+        controllers.db.session.add(new_location)
+        controllers.db.session.commit()
         
         return new__location
