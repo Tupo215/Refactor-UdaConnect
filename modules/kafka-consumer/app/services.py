@@ -11,15 +11,15 @@ from sqlalchemy.sql import text
 import psycopg2
 import app.controllers
 import grpc
-import app.create_locations_pb2
-import app.create_locations_pb2_grpc
+import create_locations_pb2
+import create_locations_pb2_grpc
 
 logging.basicConfig(level=logging.WARNING)
 logger = logging.getLogger("locations-api")
 
 # connect to gRPC server
 channel = grpc.insecure_channel("localhost:30003")
-stub = app.create_locations_pb2_grpc.LocationServiceStub(channel)
+stub = create_locations_pb2_grpc.LocationServiceStub(channel)
 
 class LocationService:
     @staticmethod
@@ -47,7 +47,7 @@ class LocationService:
         new_location.coordinate = ST_Point(location["latitude"], location["longitude"])
         
         # connects to the gRPC server and uses location service defined in __init__.py
-        new__location = stub.Create(app.create_locations_pb2.LocationMessage(
+        new__location = stub.Create(create_locations_pb2.LocationMessage(
         id = new_location.id,
         person_id = new_location.person_id,
         creation_time = new_location.creation_time,

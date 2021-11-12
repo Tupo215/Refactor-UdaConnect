@@ -11,8 +11,8 @@ from flask_restx import Namespace, Resource
 from typing import Optional, List
 import app.services
 import grpc
-import app.create_locations_pb2
-import app.create_locations_pb2_grpc
+import create_locations_pb2
+import create_locations_pb2_grpc
 
 DATE_FORMAT = "%Y-%m-%d"
 
@@ -26,7 +26,7 @@ db = SQLAlchemy(api)
 logging.basicConfig(level=logging.DEBUG )
 
 channel = grpc.insecure_channel("localhost:30003")
-stub = app.create_locations_pb2_grpc.LocationServiceStub(channel)
+stub = create_locations_pb2_grpc.LocationServiceStub(channel)
 
 @api.before_request
 def before_request():
@@ -47,7 +47,7 @@ def locations(location_id):
         return jsonify(location)
     elif request.method == 'POST':
         request.get_json()
-        location = stub.Create(app.create_locations_pb2.LocationMessage(request.get_json))
+        location = stub.Create(create_locations_pb2.LocationMessage(request.get_json))
         return jsonify(location)
     else:
         raise Exception('Unsupported HTTP request type.')
