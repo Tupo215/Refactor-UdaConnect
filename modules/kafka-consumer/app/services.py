@@ -38,6 +38,11 @@ class LocationService:
                 "coordinate" : r[3]
                 }
         
+        # sends data to kafka data
+        kafka_data = json.dumps(location).encode('utf-8')
+        kafka_producer = controllers.g.kafka_producer
+        kafka_producer.send("locations", kafka_data)
+        
         cur.close()
         conn.close()
         return location
