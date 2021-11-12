@@ -39,8 +39,8 @@ class LocationService:
 kafka_consumer = app.controllers.g.kafka_consumer
 
 for message in kafka_consumer:
-    msg = json.loads((message.value.decode('utf-8'))
-    if 'coordinate'in msg:
+    msg = json.loads(message.value.decode('utf-8'))
+    if 'coordinate' in msg:
         LocationService.retrieve(msg)
     else:
         logging.warning('No coordinate provided')
