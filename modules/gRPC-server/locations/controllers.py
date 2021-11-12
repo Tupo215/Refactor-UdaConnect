@@ -4,13 +4,16 @@ from flask_sqlalchemy import SQLAlchemy
 
 import flask
 from kafka import KafkaProducer, KafkaConsumer
-from models import Location
-from schemas import LocationSchema
+from locations.models import Location
+from locations.schemas import LocationSchema
 from flask import Flask, jsonify, request, g, Response
 from flask_accepts import accepts, responds
 from flask_restx import Namespace, Resource
 from typing import Optional, List
-import services
+import locations.services
+import grpc
+import create_locations_pb2
+import create_locations_pb2_grpc
 
 DATE_FORMAT = "%Y-%m-%d"
 
@@ -21,6 +24,9 @@ api.config['SQLALCHEMY_DATABASE_URL'] = 'postgresql://localhost:5432/geoconnecti
 db = SQLAlchemy(api)
 
 logging.basicConfig(level=logging.DEBUG )
+
+channel = grpc.insecure_channel("localhost:30003")
+stub = create_locations_pb2_grpc.LocationServiceStub(channel)
 
 @api.before_request
 def before_request():
@@ -37,11 +43,11 @@ def before_request():
 @api.route("/locations/<location_id>", methods=['GET', 'POST'])
 def locations(location_id):
     if request.method == 'GET':
-        location = services.LocationService.retrieve(location_id)
+        location = locations.services.LocationService.retrieve(location_id)
         return jsonify(location)
     elif request.method == 'POST':
         request.get_json()
-        location = services.LocationService.create(request.get_json())
+        location = stub.Create(create_locations_pb2.LocationMessage(request.get_json))
         return jsonify(location)
     else:
         raise Exception('Unsupported HTTP request type.')
