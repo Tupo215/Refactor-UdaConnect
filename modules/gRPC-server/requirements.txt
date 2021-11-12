@@ -28,3 +28,4 @@ Werkzeug==0.16.1
 flask-restx==0.5.1
 geoalchemy2
 psycopg2
+kafka-python

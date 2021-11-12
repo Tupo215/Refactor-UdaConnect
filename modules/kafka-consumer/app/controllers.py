@@ -3,13 +3,13 @@ import logging
 from flask_sqlalchemy import SQLAlchemy
 import flask
 from kafka import KafkaProducer, KafkaConsumer
-from models import Location
-from schemas import LocationSchema
+from app.models import Location
+from app.schemas import LocationSchema
 from flask import Flask, jsonify, request, g, Response
 from flask_accepts import accepts, responds
 from flask_restx import Namespace, Resource
 from typing import Optional, List
-import services
+import app.services
 import grpc
 import create_locations_pb2
 import create_locations_pb2_grpc
@@ -43,7 +43,7 @@ def before_request():
 @api.route("/locations/<location_id>", methods=['GET', 'POST'])
 def locations(location_id):
     if request.method == 'GET':
-        location = services.LocationService.retrieve(location_id)
+        location = app.services.LocationService.retrieve(location_id)
         return jsonify(location)
     elif request.method == 'POST':
         request.get_json()
