@@ -41,7 +41,7 @@ spec:
           limits:
             memory: "256Mi"
             cpu: "256m"
-      env:
+        env:
         - name: DB_USERNAME
           valueFrom:
             configMapKeyRef:
