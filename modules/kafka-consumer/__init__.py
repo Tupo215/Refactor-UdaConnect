@@ -9,11 +9,14 @@ from app.schemas import LocationSchema
 from geoalchemy2.functions import ST_AsText, ST_Point
 from sqlalchemy.sql import text
 import psycopg2
-import app.controllers
+from kafka import KafkaConsumer
 
 logging.basicConfig(level=logging.WARNING)
 logger = logging.getLogger("locations-api")
 
+TOPIC_NAME = 'locations'
+KAFKA_SERVER = 'kafka-service.default.svc.cluster.localhost:9092'
+consumer = KafkaConsumer(TOPIC_NAME, bootstrap_servers=KAFKA_SERVER)
 class LocationService:
     @staticmethod
     def retrieve(location_id):
@@ -23,7 +26,7 @@ class LocationService:
         return location
 
 # kafka consumer message
-kafka_consumer = app.controllers.g.kafka_consumer
+kafka_consumer = consumer
 
 for message in kafka_consumer:
     msg = json.loads(message.value.decode('utf-8'))

@@ -32,7 +32,7 @@ stub = create_locations_pb2_grpc.LocationServiceStub(channel)
 def before_request():
     # Set up a Kafka producer
     TOPIC_NAME = 'locations'
-    KAFKA_SERVER = 'kafka.default.svc.cluster.local:9092'
+    KAFKA_SERVER = 'kafka-service.default.svc.cluster.local:9092'
     producer = KafkaProducer(bootstrap_servers=KAFKA_SERVER)
     consumer = KafkaConsumer(TOPIC_NAME, bootstrap_servers=KAFKA_SERVER)
     # Setting Kafka to g enables us to use this
