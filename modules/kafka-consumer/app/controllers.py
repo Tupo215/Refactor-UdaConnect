@@ -13,16 +13,15 @@ import app.services
 import grpc
 import create_locations_pb2
 import create_locations_pb2_grpc
+from app.config import config_by_name
 
 DATE_FORMAT = "%Y-%m-%d"
 
 api = Flask(__name__)
 
+env=None
 #connect to database
-api.config(
-    SQLALCHEMY_TRACK_MODIFICATIONS = False,
-    SQLALCHEMY_DATABASE_URI = 'postgresql://localhost:5432/geoconnections'
-    )
+api.config.from_object(config_by_name[env or "dev"])
 
 db = SQLAlchemy(api)
 

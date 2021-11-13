@@ -1,6 +1,6 @@
 from datetime import datetime
 import logging
-
+from config import config_by_name
 import flask
 from flask_sqlalchemy import SQLAlchemy
 from kafka import KafkaProducer, KafkaConsumer
@@ -18,12 +18,9 @@ import create_locations_pb2_grpc
 DATE_FORMAT = "%Y-%m-%d"
 
 api = Flask(__name__)
-
+env=None
 #connect to database
-api.config(
-    SQLALCHEMY_TRACK_MODIFICATIONS = False,
-    SQLALCHEMY_DATABASE_URI = 'postgresql://localhost:5432/geoconnections'
-    )
+api.config.from_object(config_by_name[env or "dev"])
 
 db = SQLAlchemy(api)
 
