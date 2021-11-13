@@ -15,7 +15,7 @@ logging.basicConfig(level=logging.WARNING)
 logger = logging.getLogger("locations-api")
 
 TOPIC_NAME = 'locations'
-KAFKA_SERVER = 'kafka-service.default.svc.cluster.localhost:9092'
+KAFKA_SERVER = 'localhost:9092'
 consumer = KafkaConsumer(TOPIC_NAME, bootstrap_servers=KAFKA_SERVER)
 class LocationService:
     @staticmethod

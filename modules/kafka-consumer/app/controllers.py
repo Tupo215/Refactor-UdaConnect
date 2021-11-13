@@ -19,7 +19,10 @@ DATE_FORMAT = "%Y-%m-%d"
 api = Flask(__name__)
 
 #connect to database
-api.config['SQLALCHEMY_DATABASE_URL'] = 'postgresql://localhost:5432/geoconnections'
+api.config(
+    SQLALCHEMY_TRACK_MODIFICATIONS = False,
+    SQLALCHEMY_DATABASE_URI = 'postgresql://localhost:5432/geoconnections'
+    )
 
 db = SQLAlchemy(api)
 
@@ -32,7 +35,7 @@ stub = create_locations_pb2_grpc.LocationServiceStub(channel)
 def before_request():
     # Set up a Kafka producer
     TOPIC_NAME = 'locations'
-    KAFKA_SERVER = 'kafka-service.default.svc.cluster.local:9092'
+    KAFKA_SERVER = 'localhost:9092'
     producer = KafkaProducer(bootstrap_servers=KAFKA_SERVER)
     consumer = KafkaConsumer(TOPIC_NAME, bootstrap_servers=KAFKA_SERVER)
     # Setting Kafka to g enables us to use this
