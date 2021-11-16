@@ -8,6 +8,8 @@ class LocationSchema(Schema):
     id = fields.Integer()
     person_id = fields.Integer()
     coordinate = fields.String()
+    latitude = fields.String()
+    longitude = fields.String()
     creation_time = fields.DateTime()
 
     class Meta:

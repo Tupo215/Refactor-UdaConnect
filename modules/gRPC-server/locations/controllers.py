@@ -50,7 +50,7 @@ def locations(location_id):
         return jsonify(location)
     elif request.method == 'POST':
         request.get_json()
-        location = stub.Create(create_locations_pb2.LocationMessage(request.get_json))
+        location = locations.services.LocationService.create(request.get_json)
         return jsonify(location)
     else:
         raise Exception('Unsupported HTTP request type.')

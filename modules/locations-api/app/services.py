@@ -41,6 +41,8 @@ class LocationService:
         new_location = Location()
         new_location.person_id = location["person_id"]
         new_location.creation_time = location["creation_time"]
+        new_location.latitude = location["latitude"] 
+        new_location.longitude = location["longitude"]
         new_location.coordinate = ST_Point(location["latitude"], location["longitude"])
         
         # connects to the gRPC server and uses location service defined in __init__.py
@@ -48,9 +50,7 @@ class LocationService:
         id = new_location.id,
         person_id = new_location.person_id,
         creation_time = new_location.creation_time,
-        coordinate = new_location.coordinate))
-        #commit new location
-        controllers.db.session.add(new_location)
-        controllers.db.session.commit()
+        latitude = new_location.latitude,
+        longitude = new_location.longitude))
         
         return new__location

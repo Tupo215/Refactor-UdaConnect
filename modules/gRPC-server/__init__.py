@@ -22,13 +22,14 @@ class LocationServicer(create_locations_pb2_grpc.LocationServiceServicer):
             id = request.id,
             person_id = request.person_id,
             creation_time = request.creation_time,
-            coordinate = request.coordinate)
+            latitude = request.latitude,
+            longitude = request.longitude)
 
         new_location = Location()
         new_location.id = location.id
         new_location.person_id = location.person_id
         new_location.creation_time = location.creation_time
-        new_location.coordinate = location.coordinate
+        new_location.coordinate = ST_Point(location.latitude, location.longitude)
         
         locations.controllers.db.session.add(new_location)
         locations.controllers.db.session.commit()

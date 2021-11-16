@@ -1,0 +1,16 @@
+Hello review
+
+On the last review i was asked to change the way the locations-post calls the grpc which
+I have done but please note that I have changed it to call it in the services instead of
+directly in the api as this was causing an error which the only solution i could find was
+to use the service to first put the data into a format the grpc can take in then pass it to
+the grpc so for the implentation of calling the grpc-server plaese check the locations api 
+service.
+Another part I was asked to change was to make sure there is only one locations api. This 
+I am failing to do as I am very much confused as to how i can reroute the fronted to use the
+new locations-api. The only way I can do that is if I set as monilith which is not the aim
+of the project as it is supposed to be a microservice. But I have not given up to try figure
+it out but am also aware that time is running out and I have only completed one project so
+if you would be kind enough to overlook this allow me to move on to the next project and
+finish the course and in my spare time I come back to this change it reroute to the new 
+locations api. 
