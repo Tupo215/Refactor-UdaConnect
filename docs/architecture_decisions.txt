@@ -4,9 +4,10 @@ API:
 1. Udaconnect api
 2. locations api
 3. gRPC server
+4. person-api
 
-The frontend application uses the connection and persons api which are in the udaconnect API. The monolith application has been split into two 
-microservices with locations refactored. The locations api has been intergarated with Kafka in its get API that will help it be 
+The frontend application uses the connection and persons api where the connection api is in the udaconnect API. The monolith application has been split into three 
+microservices with persons and locations refactored. The locations api has been intergarated with Kafka in its get API that will help it be 
 asynachisis as locations are being processed the database and servers are not overworked trying to both create new locations for new users and 
 retrieve locations for old users as well as new users trying to connect. The locations post API has been refactored to include a gRPC server that will
 make sure that all the information of a new location being posted to the database which gives an extra layer of checking to verify the location information.

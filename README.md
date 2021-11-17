@@ -83,17 +83,18 @@ Afterwards, you can test that `kubectl` works by running a command like `kubectl
 8. `kubectl apply -f deployment/kafka.yaml` - Set up the service and deployment for kafka
 9. `kubectl apply -f deployment/zookeeper.yaml --validate=false` - Set up the service and deployment for zookeeper
 10. `kubectl apply -f deployment/kafka-consumer.yaml` - Set up the service and deployment for kafka-consumer
-11. `sh scripts/run_db_command.sh <POD_NAME>` - Seed your database against the `postgres` pod. (`kubectl get pods` will give you the `POD_NAME`)
+11. `kubectl apply -f deployment/person-api.yaml` - Set up the service and deployment for person-api
+12. `sh scripts/run_db_command.sh <POD_NAME>` - Seed your database against the `postgres` pod. (`kubectl get pods` will give you the `POD_NAME`)
 
 Manually applying each of the individual `yaml` files is cumbersome but going through each step provides some context on the content of the starter project. In practice, we would have reduced the number of steps by running the command against a directory to apply of the contents: `kubectl apply -f deployment/`.
 
 Note: The first time you run this project, you will need to seed the database with dummy data. Use the command `sh scripts/run_db_command.sh <POD_NAME>` against the `postgres` pod. (`kubectl get pods` will give you the `POD_NAME`). Subsequent runs of `kubectl apply` for making changes to deployments or services shouldn't require you to seed the database again!
 
 ### Verifying it Works
-Once the project is up and running, you should be able to see 8 deployments and 8 services in Kubernetes:
-`kubectl get pods` - should return `udaconnect-app`, `udaconnect-api`, `postgres`, `locations-api`, `grpc-server`, `kafka-consumer`, `kafka-broker0`, and `zookeeper-deploy`
+Once the project is up and running, you should be able to see 9 deployments and 9 services in Kubernetes:
+`kubectl get pods` - should return `udaconnect-app`, `udaconnect-api`, `postgres`, `locations-api`, `person-api`, `grpc-server`, `kafka-consumer`, `kafka-broker0`, and `zookeeper-deploy`
 
-`kubectl get services` - should return `udaconnect-app`, `udaconnect-api`, `postgres`, `locations-api`, `grpc-server`, `kafka-consumer`, `kafka-service`, and `zoo1`
+`kubectl get services` - should return `udaconnect-app`, `udaconnect-api`, `postgres`, `locations-api`, `person-api`, `grpc-server`, `kafka-consumer`, `kafka-service`, and `zoo1`
 
 
 These pages should also load on your web browser:
@@ -103,6 +104,7 @@ These pages should also load on your web browser:
 * `http://localhost:30002/locations/{locations_id}` - Locations API
 * `http://localhost:30003` - gRPC server
 * `http://localhost:30004` - kafka-consumer
+* `http://localhost:30005/api/` - Base path for Person API
 
 You can run `python create.py` to test the grpc-server
 
