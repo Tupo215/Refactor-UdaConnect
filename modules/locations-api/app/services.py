@@ -12,6 +12,7 @@ import grpc
 import create_locations_pb2
 import create_locations_pb2_grpc
 
+#set up logging
 logging.basicConfig(level=logging.WARNING)
 logger = logging.getLogger("locations-api")
 
@@ -38,6 +39,7 @@ class LocationService:
             logger.warning(f"Unexpected data format in payload: {validation_results}")
             raise Exception(f"Invalid payload: {validation_results}")
 
+        # set up the new location recieved in a manner the grpc server can understand
         new_location = Location()
         new_location.person_id = location["person_id"]
         new_location.creation_time = location["creation_time"]

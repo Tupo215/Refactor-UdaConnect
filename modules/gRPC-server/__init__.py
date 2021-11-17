@@ -1,5 +1,7 @@
 import time
 from concurrent import futures
+from flask_sqlalchemy import SQLAlchemy
+from flask import Flask, jsonify, request, g, Response
 import grpc
 import create_locations_pb2
 import create_locations_pb2_grpc
@@ -7,17 +9,31 @@ import logging
 from datetime import datetime, timedelta
 from typing import Dict, List
 import json
-import locations.controllers
-from locations.models import Location
+from models import Location
 from geoalchemy2.functions import ST_AsText, ST_Point
 from sqlalchemy.sql import text
 import psycopg2
+from config import config_by_name
 
+app = Flask(__name__)
+
+env=None
+#connect to database
+app.config.from_object(config_by_name[env or "dev"])
+
+# initi the database
+db = SQLAlchemy(app)
+
+#set up logging
 logging.basicConfig(level=logging.WARNING)
 logger = logging.getLogger("locations-api")
 
+# Defining the service for the grpc server
 class LocationServicer(create_locations_pb2_grpc.LocationServiceServicer):
     def Create(self, request, context):
+        # Request id, person_id, creation_time, latitude and longitude to 
+        # to make sure the new entry has the right format to commit to 
+        # database
         location = create_locations_pb2.LocationMessage(
             id = request.id,
             person_id = request.person_id,
@@ -25,14 +41,17 @@ class LocationServicer(create_locations_pb2_grpc.LocationServiceServicer):
             latitude = request.latitude,
             longitude = request.longitude)
 
+        # get all the id, person_id, creation_time, latitude and longitude to place in 
+        # model that the database is able to understand
         new_location = Location()
         new_location.id = location.id
         new_location.person_id = location.person_id
         new_location.creation_time = location.creation_time
         new_location.coordinate = ST_Point(location.latitude, location.longitude)
         
-        locations.controllers.db.session.add(new_location)
-        locations.controllers.db.session.commit()
+        # Commit new location to the location table
+        db.session.add(new_location)
+        db.session.commit()
         
         return location
         

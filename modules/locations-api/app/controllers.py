@@ -22,8 +22,10 @@ env=None
 #connect to database
 api.config.from_object(config_by_name[env or "dev"])
 
+#init database
 db = SQLAlchemy(api)
 
+# set up logging
 logging.basicConfig(level=logging.DEBUG )
 
 #connect to grpc-server
@@ -45,10 +47,13 @@ def before_request():
 @api.route("/locations/<location_id>", methods=['GET', 'POST'])
 def locations(location_id):
     if request.method == 'GET':
+        # call the location service to retrieve location according to location id and send data to 
+        # kafka 
         location = services.LocationService.retrieve(location_id)
         return jsonify(location)
     elif request.method == 'POST':
         request.get_json()
+        # call the location service which calls the grpc server to send the new location
         location = services.LocationService.create(request.get_json)
         return jsonify(location)
     else:

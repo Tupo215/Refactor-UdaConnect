@@ -21,8 +21,6 @@ class Location():
 
     id = Column(BigInteger, primary_key=True)
     person_id = Column(Integer, ForeignKey(Person.id), nullable=False)
-    longitude = Column(String, nullable=True)
-    latitude = Column(String, nullable=True)
     coordinate = Column(String, nullable=False)
     creation_time = Column(DateTime, nullable=False, default=datetime.utcnow)
     _wkt_shape: str = None
