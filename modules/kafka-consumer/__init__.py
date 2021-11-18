@@ -24,13 +24,16 @@ class LocationService:
         location = app.controllers.db.session.query(Location, Location.coordinate.ST_AsText()).filter(Location.id == location_id).one()
         
         return location
+a = 1
 
-# kafka consumer message
-kafka_consumer = consumer
+while a==1:
+    # kafka consumer message
+    kafka_consumer = consumer
 
-for message in kafka_consumer:
-    msg = json.loads(message.value.decode('utf-8'))
-    while 'coordinate' in msg:
-        LocationService.retrieve(msg)
-    else:
-        logging.warning('No coordinate provided')
+    for message in kafka_consumer:
+        msg = json.loads(message.value.decode('utf-8'))
+        if 'coordinate' in msg:
+            LocationService.retrieve(msg)
+        else:
+            logging.warning('No coordinate provided')
+
