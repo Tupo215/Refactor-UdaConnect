@@ -30,7 +30,7 @@ kafka_consumer = consumer
 
 for message in kafka_consumer:
     msg = json.loads(message.value.decode('utf-8'))
-    if 'coordinate' in msg:
+    while 'coordinate' in msg:
         LocationService.retrieve(msg)
     else:
         logging.warning('No coordinate provided')
