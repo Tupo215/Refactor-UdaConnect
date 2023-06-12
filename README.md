@@ -1,5 +1,6 @@
 # UdaConnect
 ## Overview
+In this project, I was able to refactor UdaConnect, an existing application that facilitates professional networking at conference and trade shows. UdaConnect ingests and uses location data to find connections between individuals who have been near one another at an event. The current version of the application is built as a proof-of-concept with a monolith architecture. My task was to apply strategies that I have learned in the course to refactor this application into a microservice architecture and implement message passing strategies to improve its design.
 ### Note
 Most of this read is based on the original README from the starter project with some minor additions. 
 ### Background
